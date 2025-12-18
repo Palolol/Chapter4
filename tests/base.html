@@ -1,0 +1,24 @@
+<!-- app/templates/base.html -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tomato Expert System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>Tomato Expert System</h1>
+        <nav>
+            <a href="{{ url_for('auth.register') }}">Register</a> 
+            <a href="{{ url_for('auth.login') }}">Login</a> 
+            <a href="{{ url_for('diagnose.diagnose_page') }}">Diagnose</a>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+
+</html>

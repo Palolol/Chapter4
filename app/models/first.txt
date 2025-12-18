@@ -1,0 +1,34 @@
+Model
+
+store information python file 
+file 1 តំណាងអោយ table មួយ
+constraint 
+__ __ គឺជាspecial file and automatically run  
+user .user 
+db.Model using sqlalchemy 
+generate password hash 
+from extensions import db
+__tablename__ 
+(attribute = id, username, email, full_name, is_active)
+string 80 = 80 word
+constraint មាន 2 unique = True mean(need user to input, need function for validation for user who have already input), nullable
+default= mean, automatically take from pc 
+onupdate = dont know 
+fucntion {set check password} => hash 
+oop (self) ក្រោមកម្មសិទ្ធរបស់ class
+password: str -> None(self.password = instance attribute and store password as string)
+
+check and return boolean 
+
+__r__= represent 
+
+table two file 
+role.py
+class Role(db.Model):
+    __tablename__ = "role"
+
+    work to do 
+
+.user = ឈ្មោះ file import (CAPITAL first letter)
+table permission permission.py
+

@@ -1,0 +1,21 @@
+view
+html(css + bootstrap)Template<->static css JS images
+table user(form.html, create.html, edit.html, detail.html, delete_confirm.html, index.html)
+tbale role(-------------------------------------------------------------------------------)
+
+base.html រួម
+btn-close 
+type class data-bs-dismiss 
+
+form can use for create and edit (html file)
+form html file គឺជាកន្លែងរៀបចំប្លង់​ block equal <label>
+
+
+
+{{form.hidden_tag()}}
+
+form label and form control
+
+next is controller (Routes, Error<-Forms(validator), Services(CRUD)-> MODEL)
+decreator
+@staticmethod 
