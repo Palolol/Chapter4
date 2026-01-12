@@ -1,2 +1,17 @@
-from .user_forms import UserCreateForm , UserEditForm
-from .user_forms import ConfirmDeleteForm
+# app/forms/__init__.py
+from app.forms.user_forms import UserCreateForm , UserEditForm, UserConfirmDeleteForm
+from app.forms.role_forms import RoleCreateForm, RoleEditForm, RoleConfirmDeleteForm
+from app.forms.permission_forms import (PermissionCreateForm, PermissionEditForm, 
+                                        PermissionConfirmDeleteForm)
+
+__all__ = [
+    "UserCreateForm",
+    "UserEditForm",
+    "UserConfirmDeletForm",
+    "RoleCreateForm",
+    "RoleEditForm",
+    "RoleConfirmDeleteForm",
+    "PermissionCreateForm",
+    "PermissionEditForm",
+    "PermissionConfirmDeleteForm",
+]
