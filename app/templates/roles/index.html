@@ -1,0 +1,93 @@
+<!-- roles/index.html -->
+{% extends "layouts/base.html" %}
+{% block title %}Roles - User Management{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Roles</h1>
+    <a href="{{ url_for('tbl_roles.create') }}" class="btn btn-primary">Create Role</a>
+</div>
+
+{% if roles %}
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered align-middle shadow-sm">
+            <thead class="table-light">
+                <tr>
+                    <th style="width: 50px;">#</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Permissions</th>
+                    <th>Users</th>
+                    <th>Created</th>
+                    <th class="text-end" style="width: 160px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for role in roles %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+
+                        <td>
+                            <a 
+                                href="{{ url_for('tbl_roles.detail', role_id=role.id) }}"
+                                class="text-decoration-none fw-semibold"
+                            > 
+                                {{ role.name }}
+                            </a>
+                        </td>
+
+                        <td>{{ role.description or '-' }}</td>
+                        
+                        <td>
+                            {% if role.permissions %}
+                                <span class="badge bg-info text-dark">
+                                    {{ role.permissions|length }}
+                                </span>
+                            {% else %}
+                                <span class="text-muted">0</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if role.users %}
+                                <span class="badge bg-secondary">
+                                    {{ role.users|length }}
+                                </span>
+                            {% else %}
+                                <span class="text-muted">0</span>
+                            {% endif %}
+                        </td>
+
+                        <td>{{ role.created_at.strftime('%Y-%m-%d') }}</td>
+
+                        <td class="text-end">
+                            <!-- Edit -->
+                            <a 
+                                href="{{ url_for('tbl_roles.edit', role_id=role.id) }}"
+                                class="btn btn-sm btn-outline-secondary"
+                                title="Edit"
+                            >
+                            ✏️
+                            </a>
+
+                            <!-- Delete -->
+                            
+                                href="{{ url_for('tbl_roles.delete_confirm', role_id=role.id) }}"
+                                class="btn btn-sm btn-outline-danger"
+                                title="Delete"
+                            >
+                                🗑️
+                            </a>
+                        </td>  
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        No roles found. 
+        <a href="{{ url_for('tbl_roles.create') }}">Create the first role</a>.
+    </div>
+{% endif %}
+{% endblock %}

@@ -1,3 +1,4 @@
+<!-- layouts/base.html -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -19,47 +20,45 @@
       <div class="container-fluid">
         <a class="navbar-brand" href="#">RBAC DEMO</a>
         
-        <!--aria-controls="navbarNav"-->
         <button
           class="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          
+          data-bs-target="#navbarMain"
           aria-controls="navbarMain"
           aria-expanded="false"
           aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarMain">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-2">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <!-- Users -->
             <li class="nav-item">
-              <a class="nav-link{% if request.endpoint == 'tbl_users' %} active{% endif %}"
+              <a class="nav-link{% if request.blueprint == 'tbl_users' %} active{% endif %}"
                 href="{{ url_for('tbl_users.index') }}">Users
               </a>
             </li>
 
             <!-- Roles -->
             <li class="nav-item">
-              <a class="nav-link {% if request.blueprint == 'tbl_users' %}active{% endif %}"
-                href="{{ url_for('tbl_users.index') }}"> User
+              <a class="nav-link{% if request.blueprint == 'tbl_roles' %} active{% endif %}"
+                href="{{ url_for('tbl_roles.index') }}">Roles
               </a>
             </li>
 
             <!-- Permissions -->
-            <li class="nav-nav-item">
-              <a class="nav-link {% if request.blueprint == 'tbl_permissions' %}active{% endif %}"
-                href="{{ url_for('tbl_users.index') }}">
+            <li class="nav-item">
+              <a class="nav-link{% if request.blueprint == 'tbl_permissions' %} active{% endif %}"
+                href="{{ url_for('tbl_permissions.index') }}">Permissions
               </a>
             </li>
           </ul>
 
           <!-- Auth Section -->
-          <ul class="nav-bar ms-auto mb-2 mb-lg-0">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             {% if current_user.is_authenticated %}
-            <li class="nav-items">
-              <span class="navbar-text me-0"> Logged in as 
+            <li class="nav-item">
+              <span class="navbar-text me-3">Logged in as 
                 <strong>{{ current_user.username }}</strong>
               </span>
             </li>
@@ -68,9 +67,10 @@
             </li>
             {% else %}
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('auth.login') }}">Logout</a>
+              <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
             </li>
             {% endif %}
+          </ul>
         </div>
       </div>
     </nav>
@@ -78,7 +78,7 @@
     <main class="container">
       {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
-        {% for category, meassage in messages %}
+        {% for category, message in messages %}
         <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
           {{ message }}
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

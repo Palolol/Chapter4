@@ -6,7 +6,7 @@ from extensions import db
 class PermissionService:
     @staticmethod
     def get_permission_all() -> List[PermissionTable]:
-        return PermissionTable.query.order_by(PermissionTable.code.asc().all())
+        return PermissionTable.query.order_by(PermissionTable.code.asc()).all()
     
     @staticmethod
     def get_permission_by_id(permission_id: int) -> Optional[PermissionTable]:

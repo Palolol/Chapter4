@@ -87,7 +87,7 @@ def register():
         login_user(new_user)
         flash("Account created successfully. You are now logged in.", "success")
         # ✅ FIX: go to tbl_users.index (not index_user)
-        return redirect(url_for("tbl_users.index"))
+        return redirect(url_for("auth.login"))
     
     return render_template("auth/register.html")
 
@@ -95,6 +95,6 @@ def register():
 @auth_bp.route("/logout")
 @login_required
 def logout():
-    login_user()
+    logout_user()
     flash("You have been logged out.", "info")
     return redirect(url_for("auth.login"))

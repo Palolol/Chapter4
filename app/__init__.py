@@ -26,12 +26,12 @@ def create_app(config_class: type[Config] = Config):
     # Register blueprints
     from app.routes.user_routes import user_bp
     from app.routes.role_routes import role_bp
-    # from app.routes.permission_routes import permission_bp
+    from app.routes.permission_routes import permission_bp
     from app.routes.auth_routes import auth_bp
     
     app.register_blueprint(user_bp)
     app.register_blueprint(role_bp)
-    # app.register_blueprint(permission_bp)
+    app.register_blueprint(permission_bp)
     app.register_blueprint(auth_bp)
 
     # Add this block so "/" goes to the Users list 
@@ -44,7 +44,7 @@ def create_app(config_class: type[Config] = Config):
     with app.app_context():
         from app.models.user import UserTable # noqa: F401
         from app.models.role import RoleTable
-        # from app.models.permission import Permissiontbale
+        from app.models.permission import PermissionTable
         db.create_all()
 
     return app

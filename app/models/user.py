@@ -6,7 +6,7 @@ from extensions import db
 from app.models.associations import tbl_user_roles 
 
 
-class UserTable(db.Model):
+class UserTable(UserMixin, db.Model):
     __tablename__ = "tbl_users"
 
     id = db.Column(db.Integer, primary_key=True)

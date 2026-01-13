@@ -26,7 +26,7 @@ def _role_choices():
     """Return list of (id, name) tuples for all roles. ordered by name."""
     return [
         (role.id, role.name)
-        for role in db.session.scarlars(
+        for role in db.session.scalars(
             db.select(RoleTable).order_by(RoleTable.name)
         )
     ]

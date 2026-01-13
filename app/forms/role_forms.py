@@ -11,12 +11,12 @@ def _permission_choices():
     """Flat (id, label) list, used for field binding only."""
     return [
         (perm.id, f"{perm.code} - {perm.name}")
-        for perm in db.session.scalar(
+        for perm in db.session.scalars(
             db.select(PermissionTable).order_by(PermissionTable.code)
         )
     ]
     
-def _permissions_ground_by_module():
+def _permissions_grouped_by_module():
     """
     Return permissions grouped by module
     {
@@ -26,7 +26,7 @@ def _permissions_ground_by_module():
     }
     """
     perms = list(
-        db.session.scalar(
+        db.session.scalars(
             db.select(PermissionTable).order_by(
                 PermissionTable.module, PermissionTable.code
             )
@@ -60,9 +60,9 @@ class RoleCreateForm(FlaskForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.permission_ids.choices = _permission_choices()
-        self.permission_by_module = _permissions_ground_by_module()
+        self.permission_by_module = _permissions_grouped_by_module()
         
-    def valiadate_name(self, field):
+    def validate_name(self, field):
         exists = db.session.scalar(
             db.select(RoleTable).filter(RoleTable.name == field.data)
         )
@@ -87,7 +87,7 @@ class RoleEditForm(FlaskForm):
         super().__init__(*args, **kwargs)
         self.original_role = original_role
         self.permission_ids.choices = _permission_choices()
-        self.permission_by_module = _permissions_ground_by_module()
+        self.permission_by_module = _permissions_grouped_by_module()
         
         if not self.is_submitted():
             self.permission_ids.data = [p.id for p in original_role.permissions]

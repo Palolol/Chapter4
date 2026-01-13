@@ -15,10 +15,10 @@
             <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
         </ul>
 
-        <form method="POST" action="{{ url_for('users.delete', user_id=user.id) }}">
+        <form method="POST" action="{{ url_for('tbl_users.delete', user_id=user.id) }}">
             {{ form.hidden_tag() }}
-            {{ form.submit(class="btn btn-danger") }}
-            <a href="{{ url_for('users.index') }}" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a href="{{ url_for('tbl_users.index') }}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 </div>

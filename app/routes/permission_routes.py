@@ -13,7 +13,7 @@ def index():
     permissions = PermissionService.get_permission_all()
     return render_template("permissions/index.html", permissions = permissions)
 
-@permission_bp.route("/<int:permission_bp")
+@permission_bp.route("/<int:permission_id>")
 @login_required
 def detail(permission_id: int):
     permission = PermissionService.get_permission_by_id(permission_id)
