@@ -3,11 +3,13 @@ from flask import Blueprint, render_template, redirect, url_for, flash, abort
 from flask_login import login_required
 from app.forms.role_forms import (RoleCreateForm, RoleEditForm, RoleConfirmDeleteForm)
 from app.services.role_service import RoleService
+from app.decorators.access_control import admin_required
 
 role_bp = Blueprint("tbl_roles", __name__, url_prefix="/roles")
 
 @role_bp.route("/")
 @login_required
+@admin_required
 def index():
     roles = RoleService.get_role_all()
     return render_template("roles/index.html", roles=roles)
@@ -18,10 +20,11 @@ def detail(role_id: int):
     role = RoleService.get_role_by_id(role_id)
     if role is None:
         abort(404)
-    return render_template("role/details.html", role=role)
+    return render_template("roles/detail.html", role=role)
 
 @role_bp.route("/create", methods=["GET", "POST"])
 @login_required
+@admin_required
 def create():
     form = RoleCreateForm()
     if form.validate_on_submit():

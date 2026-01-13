@@ -23,7 +23,7 @@ def login():
             login_user(user)
             flash("Logged in successfully.", "success")
             # ✅ FIX: go to tbl_users.index (not index_user)    
-            return redirect(url_for("tbl_users.index"))
+            return redirect(url_for("dashboard.index"))
 
         flash("Invalid username or password", "danger")
         return redirect(url_for("tbl_users.index"))

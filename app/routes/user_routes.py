@@ -7,10 +7,12 @@ from app.forms.user_forms import (
     UserConfirmDeleteForm
 )
 from app.services.user_service import UserService
+from app.decorators.access_control import admin_required, role_required
 
 # blueprint name defines endpoint prefix: tbl_users.*
 user_bp = Blueprint("tbl_users", __name__, url_prefix="/users")
 
+# Only admin can view all users
 @user_bp.route("/")
 @login_required
 def index():
@@ -25,8 +27,10 @@ def detail(user_id: int):
         abort(404)
     return render_template("users/detail.html", user=user)
 
+# Only admin can create users
 @user_bp.route("/create", methods=["GET", "POST"])
 @login_required
+@role_required(['Admin'])
 def create():
     form = UserCreateForm()
     if form.validate_on_submit():
@@ -45,7 +49,9 @@ def create():
         
     return render_template("users/create.html", form = form)
     
+
 @user_bp.route("/<int:user_id>/edit", methods=["GET", "POST"])
+@login_required
 def edit(user_id: int):
     user = UserService.get_user_by_id(user_id)
     if user is None:

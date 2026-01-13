@@ -4,11 +4,13 @@ from flask_login import login_required
 from app.forms.permission_forms import (PermissionCreateForm, PermissionEditForm, 
                                         PermissionConfirmDeleteForm)
 from app.services.permission_service import PermissionService
+from app.decorators.access_control import admin_required
 
 permission_bp = Blueprint("tbl_permissions", __name__, url_prefix="/permissions")
 
 @permission_bp.route("/")
 @login_required
+@admin_required
 def index():
     permissions = PermissionService.get_permission_all()
     return render_template("permissions/index.html", permissions = permissions)

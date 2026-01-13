@@ -22,20 +22,40 @@ class UserTable(UserMixin, db.Model):
     # NOTE: matches RoleTable:users
     roles = db.relationship("RoleTable", secondary=tbl_user_roles, back_populates="users")
     
+    # Password Management
     def set_password(self, password: str) -> None:
         self.password_hash = generate_password_hash(password)
 
     def check_password(self, password: str) -> bool:
         return check_password_hash(self.password_hash, password)
-
+    
+    # Role Checking
     def has_role(self, role_name: str) -> bool:
         return any(role.name == role_name for role in self.roles)
-
+    
+    def has_any_role(self, role_names: list[str]) -> bool:
+        """ Check if user has any of the specified roles"""
+        return any(self.has_role(role) for role in role_names)
+    
+    # Permission Checking
     def get_permission_codes(self) -> set[str]:
         return {perm.code for role in self.roles for perm in role.permissions}
     
     def has_permission(self, permission_code: str) -> bool:
         return permission_code in self.get_permission_codes()
+    
+    # Convenience Methods
+    def is_admin(self) -> bool:
+        """Quick check if user is admin"""
+        return self.has_role('Admin')
+    
+    def is_expert(self) -> bool:
+        """Quick check if user is farmer"""
+        return self.has_role('Expert')
+    
+    def is_farmer(self) -> bool:
+        """Quick check if user is farmer"""
+        return self.has_role('Farmer')
 
     def __repr__(self) -> str:
         return f"<User {self.username}>"
